@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <form action="conection.php" method="post">
+  <meta charset="UTF-8">
+  <title>Sistema de venta de Mueblería Kadmiel C&G S.A.C.</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    var formularioActual = "registroClienteForm";  // Variable de estado para rastrear el formulario actual
+
+    function mostrarFormularioRegistroCliente() {
+      if (formularioActual !== "registroClienteForm") {
+        document.getElementById("registroClienteForm").style.display = "block";
+        document.getElementById("ingresoProductoForm").style.display = "none";
+        document.getElementById("realizarVentaForm").style.display = "none";
+        formularioActual = "registroClienteForm";
+      }
+    }
+
+    function mostrarFormularioIngresoProducto() {
+      if (formularioActual === "registroClienteForm") {
+        // Realiza la validación del formulario actual si es necesario
+        if (!validarRegistroCliente()) {
+          return;
+        }
+        document.getElementById("registroClienteForm").style.display = "none";
+        document.getElementById("ingresoProductoForm").style.display = "block";
+        document.getElementById("realizarVentaForm").style.display = "none";
+        formularioActual = "ingresoProductoForm";
+      }
+    }
+
+    function mostrarFormularioRealizarVenta() {
+      if (formularioActual === "ingresoProductoForm") {
+        // Realiza la validación del formulario actual si es necesario
+        if (!validarIngresoProducto()) {
+          return;
+        }
+        document.getElementById("registroClienteForm").style.display = "none";
+        document.getElementById("ingresoProductoForm").style.display = "none";
+        document.getElementById("realizarVentaForm").style.display = "block";
+        formularioActual = "realizarVentaForm";
+      }
+    }
+
+    function validarRegistroCliente() {
+      // Realiza la validación del formulario de Registro de Cliente
+      // Retorna true si la validación es exitosa, de lo contrario, false
+      var dni = document.getElementById("dni").value;
+      var nombre = document.getElementById("nombre").value;
+
+      if (dni === "" || nombre === "") {
+        alert("Por favor, complete todos los campos obligatorios.");
+        return false;
+      }
+
+      return true;
+    }
+
+    function validarIngresoProducto() {
+      // Realiza la validación del formulario de Ingreso del Producto
+      // Retorna true si la validación es exitosa, de lo contrario, false
+      var codigoProducto = document.getElementById("codigoProducto").value;
+      var precioPropuesto = document.getElementById("precioPropuesto").value;
+
+      if (codigoProducto === "" || precioPropuesto === "") {
+        alert("Por favor, complete todos los campos obligatorios.");
+        return false;
+      }
+
+      return true;
+    }
+
+    function validarRealizarVenta() {
+      // Realiza la validación del formulario de Realizar Venta
+      // Retorna true si la validación es exitosa, de lo contrario, false
+      var idProducto = document.getElementById("IDProd").value;
+      var cantidad = document.getElementById("cantidad").value;
+      var montoFacturado = document.getElementById("montoFacturado").value;
+      var fechaVenta = document.getElementById("fechaVenta").value;
+
+      if (idProducto === "" || cantidad === "" || montoFacturado === "" || fechaVenta === "") {
+        alert("Por favor, complete todos los campos obligatorios.");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Sistema de venta de Mueblería Kadmiel C&G S.A.C.</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="#" onclick="mostrarFormularioRegistroCliente()">Registro de Cliente</a></li>
+        <li><a href="#" onclick="mostrarFormularioIngresoProducto()">Ingreso del Producto</a></li>
+        <li><a href="#" onclick="mostrarFormularioRealizarVenta()">Realizar Venta</a></li>
+      </ul>
+    </nav>
+    <main>
+      <section class="form">
+        <div id="registroClienteForm">
+          <h2>Ingrese sus datos</h2>
+          <form action="#">
+            <input type="text" id="dni" placeholder="DNI">
+            <input type="text" id="nombre" placeholder="Nombre">
+            <input type="text" placeholder="Apellido Paterno">
+            <input type="text" placeholder="Apellido Materno">
+            <input type="text" placeholder="AAAA/MM/DD">
+            <input type="text" placeholder="Dirección">
+            <input type="text" placeholder="Distrito">
+            <input type="text" placeholder="Telefono">
+            <input type="text" placeholder="E-mail">
+            <button type="button" onclick="mostrarFormularioIngresoProducto()">Registrar</button>
+          </form>
+        </div>
+
+        <div id="ingresoProductoForm" style="display: none;">
+          <h2>Ingreso del Producto</h2>
+          <form action="#">
+            <input type="text" id="codigoProducto" placeholder="Codigo del Producto">
+            <input type="text" id="precioPropuesto" placeholder="Precio Propuesto">
+            <input type="text" placeholder="Stock">
+            <input type="text" placeholder="Disponibilidad">
+            <button type="button" onclick="mostrarFormularioRealizarVenta()">Registrar</button>
+          </form>
+        </div>
+
+        <div id="realizarVentaForm" style="display: none;">
+          <h2>Realizar Venta</h2>
+          <form action="#" onsubmit="return validarRealizarVenta()">
+            <input type="text" id="cantidad" placeholder="Cantidad">
+            <input type="text" id="montoFacturado" placeholder="Monto Facturado">
+            <input type="text" id="fechaVenta" placeholder="AAAA/MM/DD">
+            <button type="submit">Registrar Venta</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>© 2023 Mueblería Kadmiel C&G S.A.C.</p>
+    </footer>
+  </div>
+</body>
+</html>
